@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "todo-list-udemy": {
+    "test-app": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -11,11 +11,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/todo-list-udemy",
+            "outputPath": "dist/test-app",
             "index": "src/index.html",
-            "browser": "src/main.ts",
+            "main": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -49,9 +49,12 @@
               "outputHashing": "all"
             },
             "development": {
+              "buildOptimizer": false,
               "optimization": false,
+              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
           "defaultConfiguration": "production"
@@ -60,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "todo-list-udemy:build:production"
+              "browserTarget": "test-app:build:production"
             },
             "development": {
-              "buildTarget": "todo-list-udemy:build:development"
+              "browserTarget": "test-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "todo-list-udemy:build"
+            "browserTarget": "test-app:build"
           }
         },
         "test": {

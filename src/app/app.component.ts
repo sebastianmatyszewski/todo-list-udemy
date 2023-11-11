@@ -1,17 +1,12 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Task } from './task';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [
-    CommonModule,
-    // inne importy
-  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   config: { title: string | null, footer : string | null, date: Date | null, } = {title: null, footer: null, date: null}
   tasks: Task[] = [
@@ -30,7 +25,25 @@ export class AppComponent {
       deadline: '2023-01-02',
       done: true,
     },
+    {
+      name: 'Siłownia',
+      deadline: '2023-01-02',
+      done: false,
+    },
+    {
+      name: 'Nauka angulara',
+      deadline: '2023-01-02',
+      done: false,
+    },
+    {
+      name: 'sprzątanie kuwety',
+      deadline: '2023-01-02',
+      done: true,
+    }
   ];
+
+  taskName: string = "";
+  taskDate: string = "";
 
   constructor() {
     setTimeout( () => {
@@ -40,5 +53,39 @@ export class AppComponent {
         date: new Date(),
       };
     }, 500);
+    this.sortTask();
+  }
+
+  createTask(){
+    const task: Task = {
+      name: this.taskName,
+      deadline: this.taskDate,
+      done: false,
+    }
+    this.taskName = "";
+    this.taskDate = "";
+    this.tasks.push(task);
+    this.sortTask();
+  }
+
+  clearTasks() {
+    this.tasks = [];
+  }
+
+  markTaskAsDone(task: Task){
+    console.log(task)
+    task.done = true;
+    this.sortTask();
+  }
+
+  deleteTask(task: Task){
+    this.tasks = this.tasks.filter(e => e !== task)
+    this.sortTask();
+  }
+
+  private sortTask() {
+    this.tasks = this.tasks.sort((a: Task, b: Task) =>
+      a.done === b.done ? 0 : a.done ? 1: -1
+    );
   }
 }
